@@ -61,8 +61,8 @@
     }
       void main() {
         o_color =  vec4(shade(DrawPos, normalize(DrawNormal)), 1.0);
-        //o_color =  vec4(normalize(DrawNormal), 1.0);
-        //o_color =  vec4(DrawColor, 1.0);
+        o_color =  vec4(normalize(DrawNormal), 1.0);
+        o_color =  vec4(DrawColor, 1.0);
 
     
     }

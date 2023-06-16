@@ -11,8 +11,8 @@ async function fetchShader(shaderURL) {
   }
 }
 
-fetchShader("./bin/shader/vert.glsl").then((vert) => {
-  fetchShader("./bin/shader/frag.glsl").then((frag) => {
+fetchShader("./bin/vert.glsl").then((vert) => {
+  fetchShader("./bin/frag.glsl").then((frag) => {
     rndInit(vert, frag);
     const draw = () => {
       render();
