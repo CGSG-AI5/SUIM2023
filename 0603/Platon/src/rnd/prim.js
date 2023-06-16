@@ -114,6 +114,6 @@ class prim {
       )
     );
 
-    //console.log(i + ":" + a[i].N.x + "," + a[i].N.y + "," + a[i].N.z)
+    console.log(i + ":" + a[i].N.x + "," + a[i].N.y + "," + a[i].N.z)
   }
 }

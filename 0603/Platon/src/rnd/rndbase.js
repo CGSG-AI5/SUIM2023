@@ -1,3 +1,6 @@
+
+import {CamSet} from '../math/mathcam.js';
+
 function rndInit(vs, fs) {
   const canvas = document.getElementById("glCanvas");
   gl = canvas.getContext("webgl2");
@@ -8,7 +11,8 @@ function rndInit(vs, fs) {
   gl.depthFunc(gl.LEQUAL);
   gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
 
-  initCam();
+  // initCam();
+  cam = CamSet(_vec3.set(0, 0, 10), _vec3.set(0, 0, 0), _vec3.set(0, 1, 0));
   World = _matr4.identity();
   w = _matr4.mulmatr(_matr4.identity(), World);
   winv = _matr4.transpose(_matr4.inverse(w));
@@ -37,9 +41,9 @@ function rndInit(vs, fs) {
   CamUBO = UBO.add(U, "BaseData");
 
   shaderInit(vs, fs);
-  // initTetr();
+  //initTetr();
   // initCube();
-  // initHex();
+  //initHex();
   // initIso();
   // initTruTetr();
   // initCubOct();
@@ -47,16 +51,16 @@ function rndInit(vs, fs) {
   // initTruOct();
   // initDod();
   // initRhom();
-  initTruCubOct();
+  //initTruCubOct();
 }
 
 function render() {
   gl.clearColor(0.28, 0.47, 0.8, 1);
   gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
   myTimer.response();
-  renderCam();
-  // renderTetr();
-  // renderHex();
+  // renderCam();
+  //renderTetr();
+  //renderHex();
   // renderCube();
   // renderIso();
   // renderDod();
@@ -65,5 +69,5 @@ function render() {
   // renderTruCub();
   // renderTruOct();
   // renderRhom();
-  renderTruCubOct();
+  //renderTruCubOct();
 }

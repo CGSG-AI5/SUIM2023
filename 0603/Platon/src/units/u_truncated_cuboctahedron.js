@@ -1,9 +1,10 @@
 let Pr_tru_cub_oct;
+let col = [1, Math.sqrt(2) + 1, 2 * Math.sqrt(2) + 1];
 
 function initTruCubOct() {
   let Vs = [];
   let Vr = [];
-  let col = [1, Math.sqrt(2) + 1, 2 * Math.sqrt(2) + 1];
+
 
   for (let m = 0; m < 2; m++) {
     for (let j = 0; j < 2; j++) {
@@ -23,48 +24,41 @@ function initTruCubOct() {
               _vec3.set((m + k + i) / 7, l / 2, k),
               _vec3.set(0, 0, 0)
             );
-
-            console.log(Vr[k + l * 2 + i * 6 + j * 12 + m * 24].P);
           }
         }
         col[0] *= m * 2 - 1;
         col[1] *= j * 2 - 1;
         col[2] *= i * 2 - 1;
-        console.log(m * 2 - 1, j * 2 - 1, i * 2 - 1);
       }
     }
   }
 
   let indices = [
-    // 0, 1, 2,
-
-    // 3, 4, 5,
-
     /*hexagon 1*/
 
     42, 43, 44,
 
-    45, 46, 47,
+    45, 47, 46,
 
-    45, 47, 42,
+    45, 42, 47,
 
     42, 44, 47,
 
     /*hexagon 2*/
 
-    30, 22, 21,
+    30, 21, 22,
 
     35, 38, 37,
 
-    30, 35, 22,
+    30, 22, 35,
 
-    35, 30, 37,
+    35, 37, 30,
 
     /*hexagon 3*/
 
     32, 19, 18,
 
-    41, 40, 33,
+    41, 33, 40,
 
     33, 41, 32,
 
@@ -72,19 +66,19 @@ function initTruCubOct() {
 
     /*hexagon 4*/
 
-    20, 23, 36,
+    20, 36, 23,
 
     23, 36, 39,
 
     23, 39, 34,
 
-    20, 36, 31,
+    20, 31, 36,
 
     /*square 1-3*/
 
-    46, 21, 22,
+    46, 22, 21,
 
-    46, 45, 21,
+    46, 21, 45,
 
     18, 19, 43,
 
@@ -98,9 +92,9 @@ function initTruCubOct() {
 
     40, 33, 9,
 
-    9, 40, 16,
+    9, 16, 40,
 
-    41, 32, 17,
+    41, 17, 32,
 
     8, 32, 17,
 
@@ -108,17 +102,17 @@ function initTruCubOct() {
 
     30, 37, 13,
 
-    13, 30, 6,
+    13, 6, 30, 
 
-    35, 38, 14,
+    35, 14, 38,
 
-    35, 14, 11,
+    35, 11, 14,
 
     /*square 8-9*/
 
     36, 31, 12,
 
-    31, 12, 7,
+    31, 7, 12,
 
     34, 39, 10,
 
@@ -126,27 +120,99 @@ function initTruCubOct() {
 
     /*hexagon 5*/
 
-    13, 6, 9,
+    13, 9, 6,
 
-    13, 9, 16,
+    13, 16, 9,
 
-    16, 26, 13,
+    16, 13, 26,
 
     16, 26, 29,
 
     /*hexagon 6*/
 
-    34, 35, 29,
+    10, 14, 11,
 
-    13, 9, 16,
+    14, 10, 15,
 
-    16, 26, 13,
+    15, 25, 14,
 
-    16, 26, 29,
+    25, 15, 24,
 
-    24, 25, 26,
+    /*hexagon 7*/
 
-    27, 28, 29,
+    17, 27, 8,
+
+    17, 28, 27,
+
+    27, 12, 8,
+
+    12, 7, 8,
+
+    /*sqaure 10-12*/
+
+    2, 5, 26,
+
+    5, 29, 26,
+
+    27, 28, 4,
+
+    3, 27, 4, 
+    
+    0, 1, 25,
+
+    25, 24, 0, 
+
+    /*hexagon 8*/
+
+    0, 2, 1,
+
+    3, 4, 5,
+
+    0, 3, 5,
+
+    0, 5, 2,
+
+    /* octagon  1*/
+
+    7, 20, 8,
+
+    20, 19, 8,
+
+    7, 31, 20,
+
+    8, 19, 32,
+
+    19, 44, 43,
+
+    44, 19, 20,
+
+    /* octagon  2*/
+
+    6, 9, 33,
+
+    18, 6, 33,
+
+    6, 18, 30,
+
+    42, 30, 18,
+
+    30, 42, 45,
+
+    45, 21, 30,
+
+    /* octagon  3*/
+
+    10, 11, 34,
+
+    11, 35, 34,
+
+    35, 23, 34, 
+
+    23, 35, 22,
+
+    23, 22, 46, 
+
+    47, 23, 46
   ];
 
   for (let i = 0; i < indices.length; i++) {
@@ -156,9 +222,9 @@ function initTruCubOct() {
     indices[i] = i;
   }
 
-  //   for (let i = 0; i < indices.length / 3; i++) {
-  //     prim.create_normal(Vs, i * 3);
-  //   }
+    for (let i = 0; i < indices.length / 3; i++) {
+      prim.create_normal(Vs, i * 3);
+    }
 
   let Mtl = material.MtlGetDef();
   Mtl = new material(
@@ -181,7 +247,7 @@ function initTruCubOct() {
 
 function renderTruCubOct() {
   let Worl = _matr4.mulmatr(
-    _matr4.scale(_vec3.set(0.9, 0.9, 0.9)),
+    _matr4.scale(_vec3.set(1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),1 / _vec3.len(_vec3.set(col[0], col[1], col[2])))),
     _matr4.translate(_vec3.set(0, 0, 0))
   );
   prim.draw(Pr_tru_cub_oct, Worl);

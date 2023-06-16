@@ -51,7 +51,7 @@ class _camera {
   }
 }
 
-function CamSet(Loc, At, Up1) {
+export function CamSet(Loc, At, Up1) {
   let Up, Dir, Right;
   ``;
   let FrameW = 1200,
