@@ -1,9 +1,9 @@
-let Pr_tru_cub;
+let Pr_rhom;
 
-function initTruCub() {
+function initRhom() {
   let Vs = [];
   let Vr = [];
-  let col = [1, 1, Math.sqrt(2) - 1];
+  let col = [1, 1, Math.sqrt(2) + 1];
 
   for (let j = 0; j < 3; j++) {
     for (let i = 0; i < 2; i++) {
@@ -24,7 +24,7 @@ function initTruCub() {
   }
 
   let indices = [
-    /* triangle*/
+    /*triangles*/
 
     0, 16, 8,
 
@@ -42,89 +42,87 @@ function initTruCub() {
 
     7, 15, 23,
 
-    /*octagon 1*/
+    /* square before 1 - 5*/
 
-    0, 8, 1,
+    7, 23, 5,
 
-    8, 9, 1,
+    23, 21, 5,
 
-    8, 10, 9,
+    23, 22, 21,
 
-    10, 11, 9,
+    22, 20, 21,
 
-    10, 2, 11,
+    20, 13, 21,
 
-    11, 2, 3,
+    13, 20, 12,
 
-    /*octagon 2*/
+    15, 14, 23,
 
-    9, 13, 17,
+    23, 14, 22,
 
-    17, 13, 21,
+    22, 6, 20,
 
-    13, 9, 11,
+    4, 20, 6,
 
-    11, 15, 13,
+    /* square back 6 - 10*/
 
-    11, 23, 15,
+    16, 17, 9,
 
-    19, 23, 11,
+    16, 9, 8,
 
-    /*octagon 3*/
+    0, 2, 16,
 
-    5, 13, 4,
+    16, 2, 18,
 
-    13, 12, 4,
+    18, 19, 16,
 
-    15, 14, 12,
+    19, 17, 16,
 
-    14, 15, 7,
+    19, 1, 17,
 
-    14, 7, 6,
+    1, 19, 3,
 
-    13, 15, 12,
+    18, 10, 19,
 
-    /*octagon 4*/
+    10, 11, 19,
 
-    20, 8, 16,
+    /*squre up-down 11 - 12*/
 
-    20, 12, 8,
+    10, 15, 11,
 
-    14, 8, 12,
+    14, 15, 10,
 
-    14, 10, 8,
+    8, 9, 12,
 
-    14, 18, 10,
+    12, 9, 13,
 
-    18, 14, 22,
+    /*squre right 13 - 15*/
 
-    /*octagon 5*/
+    6, 2, 4,
 
-    19, 3, 18,
+    0, 4, 2,
 
-    2, 18, 3,
+    14, 2, 6,
 
-    18, 22, 19,
+    2, 14, 10,
 
-    23, 19, 22,
+    12, 4, 0,
 
-    23, 22, 7,
+    0, 8, 12,
 
-    6, 7, 22,
+    /*squre left 16 - 18*/
 
-    /*octagon 6*/
+    3, 7, 1,
 
-    0, 1, 16,
+    1, 7, 5,
 
-    16, 1, 17,
+    7, 3, 15,
 
-    17, 21, 16,
+    11, 15, 3,
 
-    16, 21, 20,
+    1, 5, 9,
 
-    21, 4, 20,
-
-    21, 5, 4,
+    9, 5, 13,
   ];
   for (let i = 0; i < indices.length; i++) {
     Vs[i] = vertex.create(Vr[indices[i]]);
@@ -147,19 +145,19 @@ function initTruCub() {
     1,
     [-1, -1, -1, -1, -1, -1, -1, -1]
   );
-  Pr_tru_cub = prim.create(
+  Pr_rhom = prim.create(
     Vs,
     Vs.length,
     indices,
     indices.length,
-    material.add(Matlib.Jade)
+    material.add(Matlib.Bronze)
   );
 }
 
-function renderTruCub() {
+function renderRhom() {
   let Worl = _matr4.mulmatr(
-    _matr4.scale(_vec3.set(0.9, 0.9, 0.9)),
-    _matr4.translate(_vec3.set(-5, 0, 3))
+    _matr4.scale(_vec3.set(0.4, 0.4, 0.4)),
+    _matr4.translate(_vec3.set(-5, 0, 9))
   );
-  prim.draw(Pr_tru_cub, Worl);
+  prim.draw(Pr_rhom, Worl);
 }

@@ -170,7 +170,7 @@ function initCube() {
     Vrts.length,
     indices,
     indices.length,
-    material.add(Mtl)
+    material.add(Matlib.Obsidian)
   );
 }
 

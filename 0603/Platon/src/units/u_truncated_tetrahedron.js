@@ -185,15 +185,15 @@ function initTruTetr() {
     Vs.length,
     indices,
     indices.length,
-    material.add(Mtl)
+    material.add(Matlib.Copper)
   );
 }
 
 function renderTruTetr() {
   for (let i = 0; i < 1; i++) {
     let Worl = _matr4.mulmatr(
-      _matr4.scale(_vec3.set(0.5, 0.5, 0.5)),
-      _matr4.translate(_vec3.set(0, 0, i * -5))
+      _matr4.scale(_vec3.set(0.4, 0.4, 0.4)),
+      _matr4.translate(_vec3.set(-5, 0, -3))
     );
     prim.draw(Pr_tru_tetr, Worl);
   }

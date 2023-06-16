@@ -113,5 +113,7 @@ class prim {
         _vec3.sub(a[i].P, a[i + 2].P)
       )
     );
+
+    //console.log(i + ":" + a[i].N.x + "," + a[i].N.y + "," + a[i].N.z)
   }
 }

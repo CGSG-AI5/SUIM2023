@@ -148,16 +148,14 @@ function initCubOct() {
     Vs.length,
     indices,
     indices.length,
-    material.add(Mtl)
+    material.add(Matlib.Brass)
   );
 }
 
 function renderCubOct() {
-  for (let i = 0; i < 1; i++) {
-    let Worl = _matr4.mulmatr(
-      _matr4.scale(_vec3.set(1, 1, 1)),
-      _matr4.translate(_vec3.set(0, 0, i * -5))
-    );
-    prim.draw(Pr_cub_oct, Worl);
-  }
+  let Worl = _matr4.mulmatr(
+    _matr4.scale(_vec3.set(1, 1, 1)),
+    _matr4.translate(_vec3.set(-5, 0, 0))
+  );
+  prim.draw(Pr_cub_oct, Worl);
 }

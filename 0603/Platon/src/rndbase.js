@@ -39,12 +39,14 @@ function rndInit(vs, fs) {
   shaderInit(vs, fs);
   initTetr();
   initCube();
-  //initHex();
-  //initIso();
-  //initTruTetr();
-  //initCubOct();
-  // initTruCub();
+  initHex();
+  initIso();
+  initTruTetr();
+  initCubOct();
+  initTruCub();
   initTruOct();
+  initDod();
+  initRhom();
 }
 
 function render() {
@@ -52,13 +54,14 @@ function render() {
   gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
   myTimer.response();
   renderCam();
-  // renderTetr();
-  //renderHex();
+  renderTetr();
+  renderHex();
   renderCube();
-  //renderIso();
-  //renderDod();
-  //renderTruTetr();
-  //renderCubOct();
-  //renderTruCub();
+  renderIso();
+  renderDod();
+  renderTruTetr();
+  renderCubOct();
+  renderTruCub();
   renderTruOct();
+  renderRhom();
 }

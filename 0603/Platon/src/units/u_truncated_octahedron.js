@@ -4,136 +4,138 @@ function initTruOct() {
   let Vs = [];
   let Vr = [];
   let col = [0, 1, 2, 0, -1, -2, 0, -1, 2, 0, 1, -2];
-  
-  for (let j = 0; j < 4; j++ ){
+
+  for (let j = 0; j < 4; j++) {
     for (let i = 0; i < 3; i++) {
       for (let l = 0; l < 2; l++) {
-          Vr[i * 2 + l + j * 6] = new vertex(
-            _vec3.set(col[j * 3 + i], col[j * 3 + (i + l + 1) % 3], col[j * 3 + (i + 2 * l + 2) % 3]),
-            _vec3.set(j / 3, l / 2, l),
-            _vec3.set(0, 0, 0)
-          );
+        Vr[i * 2 + l + j * 6] = new vertex(
+          _vec3.set(
+            col[j * 3 + i],
+            col[j * 3 + ((i + l + 1) % 3)],
+            col[j * 3 + ((i + 2 * l + 2) % 3)]
+          ),
+          _vec3.set(j / 3, l / 2, l),
+          _vec3.set(0, 0, 0)
+        );
       }
-  } 
-}
-
+    }
+  }
 
   let indices = [
-                /*squere 1*/
+    /*squere 1*/
 
-                0, 12, 15,
+    0, 12, 15,
 
-                0, 3, 12,
+    0, 3, 12,
 
-                /*squere 2*/
+    /*squere 2*/
 
-                1, 13, 2,
+    1, 13, 2,
 
-                1, 14, 13, 
+    1, 14, 13,
 
-                /*squere 3*/
+    /*squere 3*/
 
-                5, 17, 4,
+    5, 17, 4,
 
-                5, 16, 17,  
+    5, 16, 17,
 
-                /*squere 4*/
+    /*squere 4*/
 
-                11, 10, 22,
+    11, 10, 22,
 
-                10, 23, 22,   
+    10, 23, 22,
 
-                /*squere 5*/
+    /*squere 5*/
 
-                20, 7, 19,
+    20, 7, 19,
 
-                19, 7, 8,    
-                
-                /*squere 6*/
+    19, 7, 8,
 
-                6, 18, 9,
+    /*squere 6*/
 
-                6, 21, 18,  
-                
-                /* hexagon 1 */
+    6, 18, 9,
 
-                5, 2, 13,
+    6, 21, 18,
 
-                13, 18, 5, 
-                 
-                5, 18, 21,
+    /* hexagon 1 */
 
-                21, 16, 5,
+    5, 2, 13,
 
-                /* hexagon 2 */
+    13, 18, 5,
 
-                5, 1, 2,
+    5, 18, 21,
 
-                1, 5, 0, 
-                 
-                5, 3, 0,
+    21, 16, 5,
 
-                3, 5, 4,
+    /* hexagon 2 */
 
-                /* hexagon 3 */
+    5, 1, 2,
 
-                14, 1, 0,
+    1, 5, 0,
 
-                0, 23, 14, 
-                 
-                0, 22, 23,
+    5, 3, 0,
 
-                22, 0, 15,
-                /* hexagon 4 */
+    3, 5, 4,
 
-                18, 13, 14,
+    /* hexagon 3 */
 
-                14, 23, 18, 
-                 
-                9, 18, 23,
+    14, 1, 0,
 
-                9, 23, 10,
+    0, 23, 14,
 
-                /* hexagon 5 */
+    0, 22, 23,
 
-                8, 11, 19,
+    22, 0, 15 /* hexagon 4 */,
 
-                19, 11, 12, 
-                 
-                11, 15, 12,
+    18, 13, 14,
 
-                11, 22, 15,
+    14, 23, 18,
 
-                /* hexagon 6 */
+    9, 18, 23,
 
-                19, 12, 20,
+    9, 23, 10,
 
-                20, 12, 17, 
-                 
-                12, 3, 17,
+    /* hexagon 5 */
 
-                17, 3, 4,
+    8, 11, 19,
 
-                /* hexagon 7 */
+    19, 11, 12,
 
-                20, 17, 7,
+    11, 15, 12,
 
-                17, 6, 7, 
-                 
-                17, 21, 6,
+    11, 22, 15,
 
-                21, 17, 16,
+    /* hexagon 6 */
 
-                /* hexagon 8 */
+    19, 12, 20,
 
-                8, 7, 11,
+    20, 12, 17,
 
-                11, 7, 6, 
-                 
-                11, 6, 10,
+    12, 3, 17,
 
-                9, 10, 6,               
-                ];
+    17, 3, 4,
+
+    /* hexagon 7 */
+
+    20, 17, 7,
+
+    17, 6, 7,
+
+    17, 21, 6,
+
+    21, 17, 16,
+
+    /* hexagon 8 */
+
+    8, 7, 11,
+
+    11, 7, 6,
+
+    11, 6, 10,
+
+    9, 10, 6,
+  ];
   for (let i = 0; i < indices.length; i++) {
     Vs[i] = vertex.create(Vr[indices[i]]);
   }
@@ -141,9 +143,9 @@ function initTruOct() {
     indices[i] = i;
   }
 
-    for (let i = 0; i < indices.length / 3; i++) {
-      prim.create_normal(Vs, i * 3);
-    }
+  for (let i = 0; i < indices.length / 3; i++) {
+    prim.create_normal(Vs, i * 3);
+  }
 
   let Mtl = material.MtlGetDef();
   Mtl = new material(
@@ -160,16 +162,14 @@ function initTruOct() {
     Vs.length,
     indices,
     indices.length,
-    material.add(Mtl)
+    material.add(Matlib.Ruby)
   );
 }
 
 function renderTruOct() {
-  for (let i = 0; i < 1; i++) {
-    let Worl = _matr4.mulmatr(
-      _matr4.scale(_vec3.set(.5, .5, .5)),
-      _matr4.translate(_vec3.set(0, 0, i * -5))
-    );
-    prim.draw(Pr_tru_oct, Worl);
-  }
+  let Worl = _matr4.mulmatr(
+    _matr4.scale(_vec3.set(0.5, 0.5, 0.5)),
+    _matr4.translate(_vec3.set(-5, 0, 6))
+  );
+  prim.draw(Pr_tru_oct, Worl);
 }

@@ -121,23 +121,21 @@ function initTetr() {
     Vr.length,
     indices,
     indices.length,
-    material.add(Mtl)
+    material.add(Matlib.Emerald)
   );
 }
 
 function renderTetr() {
-  for (let i = -3; i < 3; i++) {
-    let Worl = _matr4.mulmatr(
+  let Worl = _matr4.mulmatr(
+    _matr4.mulmatr(
       _matr4.mulmatr(
-        _matr4.mulmatr(
-          _matr4.rotateY(47 * myTimer.localTime * 0),
-          _matr4.rotateZ(47 * myTimer.localTime * 0 + 45 * 0)
-        ),
-        _matr4.rotateY(80 * myTimer.localTime * 0)
+        _matr4.rotateY(47 * myTimer.localTime * 0),
+        _matr4.rotateZ(47 * myTimer.localTime * 0 + 45 * 0)
       ),
-      _matr4.translate(_vec3.set(0, 0, i * -5))
-    );
+      _matr4.rotateY(80 * myTimer.localTime * 0)
+    ),
+    _matr4.translate(_vec3.set(0, 0, -3))
+  );
 
-    prim.draw(Pr_tetraider, Worl);
-  }
+  prim.draw(Pr_tetraider, Worl);
 }
