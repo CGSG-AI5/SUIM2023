@@ -7,6 +7,14 @@ import { myTimer } from "../timer.js";
 import { shaderInit } from "./res/shader.js";
 import { initCube, renderCube } from "../units/u_cube.js";
 import { initCam, renderCam } from "../units/u_control.js";
+import { initDod, renderDod } from "../units/u_dodecahedron.js";
+import { initHex, renderHex } from "../units/u_hexahedron.js";
+import { initIso, renderIso } from "../units/u_isocahedron.js";
+import { initTetr, renderTetr } from "../units/u_tetraider.js";
+import {
+  initTruCubOct,
+  renderTruCubOct,
+} from "../units/u_truncated_cuboctahedron.js";
 export let CamUBO;
 
 export function rndInit(vs, fs) {
@@ -46,18 +54,18 @@ export function rndInit(vs, fs) {
   CamUBO = UBO.add(U, "BaseData");
 
   shaderInit(vs, fs);
-  
-  //initTetr();
-  initCube();
-  //initHex();
+
+  // initTetr();
+  // initCube();
+  // initHex();
   // initIso();
-  // initTruTetr();
-  // initCubOct();
-  // initTruCub();
+  // // initTruTetr();
+  // // initCubOct();
+  // // initTruCub();
   // initTruOct();
   // initDod();
   // initRhom();
-  //initTruCubOct();
+  initTruCubOct();
 }
 
 export function render() {
@@ -65,15 +73,15 @@ export function render() {
   gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
 
   renderCam();
-  //renderTetr();
-  //renderHex();
-  renderCube();
+  // renderTetr();
+  // renderHex();
+  // renderCube();
   // renderIso();
   // renderDod();
   // renderTruTetr();
   // renderCubOct();
-  // renderTruCub();
-  // renderTruOct();
+  //renderTruCub();
+  //renderTruOct();
   // renderRhom();
-  //renderTruCubOct();
+  renderTruCubOct();
 }

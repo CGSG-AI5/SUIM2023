@@ -1,10 +1,15 @@
+import { prim, vertex } from "../rnd/prim.js";
+import { _vec3 } from "../math/mathvec3.js";
+import { material, Matlib } from "../rnd/res/material.js";
+import { _matr4 } from "../math/mathmat4.js";
+import { myTimer } from "../timer.js";
+
 let Pr_tru_cub_oct;
 let col = [1, Math.sqrt(2) + 1, 2 * Math.sqrt(2) + 1];
 
-function initTruCubOct() {
+export function initTruCubOct() {
   let Vs = [];
   let Vr = [];
-
 
   for (let m = 0; m < 2; m++) {
     for (let j = 0; j < 2; j++) {
@@ -102,7 +107,7 @@ function initTruCubOct() {
 
     30, 37, 13,
 
-    13, 6, 30, 
+    13, 6, 30,
 
     35, 14, 38,
 
@@ -156,11 +161,11 @@ function initTruCubOct() {
 
     27, 28, 4,
 
-    3, 27, 4, 
-    
+    3, 27, 4,
+
     0, 1, 25,
 
-    25, 24, 0, 
+    25, 24, 0,
 
     /*hexagon 8*/
 
@@ -200,19 +205,61 @@ function initTruCubOct() {
 
     45, 21, 30,
 
-    /* octagon  3*/
+    /* octagon  3 */
 
     10, 11, 34,
 
     11, 35, 34,
 
-    35, 23, 34, 
+    35, 23, 34,
 
     23, 35, 22,
 
-    23, 22, 46, 
+    23, 22, 46,
 
-    47, 23, 46
+    47, 23, 46,
+
+    /*octagon  4*/
+
+    1, 2, 25,
+
+    26, 25, 2,
+
+    14, 25, 26,
+
+    26, 13, 14,
+
+    38, 14, 13,
+
+    38, 13, 37,
+
+    /*octagon  5*/
+
+    4, 28, 5,
+
+    5, 28, 29,
+
+    28, 17, 29,
+
+    29, 17, 16,
+
+    16, 17, 41,
+
+    40, 16, 41,
+
+    /*octagon  6*/
+
+    3, 0, 24,
+
+    3, 24, 27,
+
+    24, 15, 27,
+
+    12, 27, 15,
+
+    12, 15, 39,
+
+    39, 36, 12,
   ];
 
   for (let i = 0; i < indices.length; i++) {
@@ -222,9 +269,9 @@ function initTruCubOct() {
     indices[i] = i;
   }
 
-    for (let i = 0; i < indices.length / 3; i++) {
-      prim.create_normal(Vs, i * 3);
-    }
+  for (let i = 0; i < indices.length / 3; i++) {
+    prim.create_normal(Vs, i * 3);
+  }
 
   let Mtl = material.MtlGetDef();
   Mtl = new material(
@@ -241,13 +288,19 @@ function initTruCubOct() {
     Vs.length,
     indices,
     indices.length,
-    material.add(Matlib.Jade)
+    material.add(Matlib.Turquoise)
   );
 }
 
-function renderTruCubOct() {
+export function renderTruCubOct() {
   let Worl = _matr4.mulmatr(
-    _matr4.scale(_vec3.set(1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),1 / _vec3.len(_vec3.set(col[0], col[1], col[2])))),
+    _matr4.scale(
+      _vec3.set(
+        1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
+        1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
+        1 / _vec3.len(_vec3.set(col[0], col[1], col[2]))
+      )
+    ),
     _matr4.translate(_vec3.set(0, 0, 0))
   );
   prim.draw(Pr_tru_cub_oct, Worl);

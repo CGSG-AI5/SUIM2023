@@ -1,6 +1,11 @@
+import { prim, vertex } from "../rnd/prim.js";
+import { _vec3 } from "../math/mathvec3.js";
+import { material, Matlib } from "../rnd/res/material.js";
+import { _matr4 } from "../math/mathmat4.js";
+import { myTimer } from "../timer.js";
 let Pr_hex;
 
-function initHex() {
+export function initHex() {
   let Vs = [];
   let Vr = [];
 
@@ -103,17 +108,17 @@ function initHex() {
   );
 }
 
-function renderHex() {
-    let Worl = _matr4.mulmatr(
+export function renderHex() {
+  let Worl = _matr4.mulmatr(
+    _matr4.mulmatr(
       _matr4.mulmatr(
-        _matr4.mulmatr(
-          _matr4.rotateY(47 * myTimer.localTime * 0),
-          _matr4.rotateZ(47 * myTimer.localTime * 0 + 45 * 0)
-        ),
-        _matr4.rotateY(80 * myTimer.localTime * 0)
+        _matr4.rotateY(47 * myTimer.localTime * 0),
+        _matr4.rotateZ(47 * myTimer.localTime * 0 + 45 * 0)
       ),
-      _matr4.translate(_vec3.set(0, 0, 3))
-    );
+      _matr4.rotateY(80 * myTimer.localTime * 0)
+    ),
+    _matr4.translate(_vec3.set(0, 0, 3))
+  );
 
-    prim.draw(Pr_hex, Worl);
+  prim.draw(Pr_hex, Worl);
 }

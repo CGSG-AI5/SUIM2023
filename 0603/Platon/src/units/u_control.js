@@ -47,25 +47,25 @@ export function renderCam() {
     cam.At = _vec3.add(cam.At, dv);
     cam.Loc = _vec3.add(cam.Loc, dv);
   }
-    CamSet(
-      _vec3.point_transform(
-        _vec3.set(0, Dist, 0),
-        _matr4.mulmatr(
-          _matr4.mulmatr(_matr4.rotateX(Elevator), _matr4.rotateY(Azimuth)),
-          _matr4.translate(cam.At)
-        )
-      ),
-      cam.At,
-      _vec3.set(0, 1, 0)
-    );
+  CamSet(
+    _vec3.point_transform(
+      _vec3.set(0, Dist, 0),
+      _matr4.mulmatr(
+        _matr4.mulmatr(_matr4.rotateX(Elevator), _matr4.rotateY(Azimuth)),
+        _matr4.translate(cam.At)
+      )
+    ),
+    cam.At,
+    _vec3.set(0, 1, 0)
+  );
 
-    UBO.update(CamUBO, Ubo_cell.MatrVP, cam.MatrVP);
-    UBO.update(CamUBO, Ubo_cell.MatrV, cam.MatrView);
-    UBO.update(CamUBO, Ubo_cell.CamLoc, cam.Loc);
-    UBO.update(CamUBO, Ubo_cell.CamAt, cam.At);
-    UBO.update(CamUBO, Ubo_cell.CamRight, cam.Right);
-    UBO.update(CamUBO, Ubo_cell.CamUp, cam.Up);
-    UBO.update(CamUBO, Ubo_cell.CamDir, cam.Dir);
+  UBO.update(CamUBO, Ubo_cell.MatrVP, cam.MatrVP);
+  UBO.update(CamUBO, Ubo_cell.MatrV, cam.MatrView);
+  UBO.update(CamUBO, Ubo_cell.CamLoc, cam.Loc);
+  UBO.update(CamUBO, Ubo_cell.CamAt, cam.At);
+  UBO.update(CamUBO, Ubo_cell.CamRight, cam.Right);
+  UBO.update(CamUBO, Ubo_cell.CamUp, cam.Up);
+  UBO.update(CamUBO, Ubo_cell.CamDir, cam.Dir);
   //   if (Ani->Keys[VK_SHIFT] && Ani->KeysClick['P'])
   //     Ani->IsPause = !Ani->IsPause;
 }

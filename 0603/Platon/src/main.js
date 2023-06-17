@@ -55,6 +55,7 @@ Promise.all(names.map((u) => fetch(u)))
       myInput.response(Md, MouseClick, Wheel, Keys);
       render();
       Wheel = 0;
+      Md.fill(0)
       window.requestAnimationFrame(draw);
 
     };

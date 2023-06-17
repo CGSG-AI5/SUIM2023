@@ -1,6 +1,12 @@
+import { prim, vertex } from "../rnd/prim.js";
+import { _vec3 } from "../math/mathvec3.js";
+import { material, Matlib } from "../rnd/res/material.js";
+import { _matr4 } from "../math/mathmat4.js";
+import { myTimer } from "../timer.js";
+
 let Pr_tetraider;
 
-function initTetr() {
+export function initTetr() {
   let Vr = [];
 
   Vr[0] = new vertex(
@@ -125,7 +131,7 @@ function initTetr() {
   );
 }
 
-function renderTetr() {
+export function renderTetr() {
   let Worl = _matr4.mulmatr(
     _matr4.mulmatr(
       _matr4.mulmatr(

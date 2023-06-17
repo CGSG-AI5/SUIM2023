@@ -1,6 +1,12 @@
+import { prim, vertex } from "../rnd/prim.js";
+import { _vec3 } from "../math/mathvec3.js";
+import { material, Matlib } from "../rnd/res/material.js";
+import { _matr4 } from "../math/mathmat4.js";
+import { myTimer } from "../timer.js";
+
 let Pr_iso;
 
-function initIso() {
+export function initIso() {
   let Vs = [];
   let Vr = [];
 
@@ -170,7 +176,7 @@ function initIso() {
   );
 }
 
-function renderIso() {
+export function renderIso() {
   let Worl = _matr4.mulmatr(
     _matr4.mulmatr(
       _matr4.mulmatr(

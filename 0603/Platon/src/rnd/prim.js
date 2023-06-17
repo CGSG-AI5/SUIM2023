@@ -2,6 +2,7 @@ import { UBO } from "./res/ubo.js";
 import { gl } from "./rnddata.js";
 import { program } from "./res/shader.js";
 import { _matr4 } from "../math/mathmat4.js";
+import { _vec3 } from "../math/mathvec3.js";
 import { cam } from "../math/mathcam.js";
 import { CamUBO } from "./rndbase.js";
 import { Ubo_cell } from "./res/ubo.js";
