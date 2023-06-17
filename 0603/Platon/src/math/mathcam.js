@@ -1,3 +1,12 @@
+import { _vec3 } from "./mathvec3.js";
+import { _matr4 } from "./mathmat4.js";
+export let cam;
+
+let ProjSize = 0.1 /* Project plane fit square */,
+  ProjDist = 0.1 /* Distance to project plane from viewer (near) */,
+  ProjFarClip = 300; /* Distance to project far clip plane (far) */
+
+
 class _camera {
   constructor(
     ProjSize,
@@ -76,7 +85,7 @@ export function CamSet(Loc, At, Up1) {
     ),
     MatrVP = _matr4.mulmatr(MatrView, MatrProj);
 
-  return new _camera(
+  cam =  new _camera(
     ProjSize,
     ProjDist,
     ProjFarClip,

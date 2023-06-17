@@ -1,4 +1,13 @@
-class vertex {
+import { UBO } from "./res/ubo.js";
+import { gl } from "./rnddata.js";
+import { program } from "./res/shader.js";
+import { _matr4 } from "../math/mathmat4.js";
+import { cam } from "../math/mathcam.js";
+import { CamUBO } from "./rndbase.js";
+import { Ubo_cell } from "./res/ubo.js";
+import { material } from "./res/material.js";
+
+export class vertex {
   constructor(P, C, N) {
     this.P = P;
     this.C = C;
@@ -13,7 +22,7 @@ class vertex {
   }
 }
 
-class prim {
+export class prim {
   constructor(VA, VBuf, IBuf, NumOfElements, Trans, MtlNo) {
     this.VA = VA;
     this.VBuf = VBuf;
@@ -114,6 +123,6 @@ class prim {
       )
     );
 
-    console.log(i + ":" + a[i].N.x + "," + a[i].N.y + "," + a[i].N.z)
+    console.log(i + ":" + a[i].N.x + "," + a[i].N.y + "," + a[i].N.z);
   }
 }

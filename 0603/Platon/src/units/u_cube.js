@@ -1,6 +1,11 @@
+import { prim, vertex } from "../rnd/prim.js";
+import { _vec3 } from "../math/mathvec3.js";
+import { material, Matlib } from "../rnd/res/material.js";
+import { _matr4 } from "../math/mathmat4.js";
+import { myInput } from "../input.js";
 let Pr_cube;
 
-function initCube() {
+export function initCube() {
   let Vrts = [];
   Vrts[0] = new vertex(
     _vec3.set(-1, 1, 1),
@@ -174,7 +179,7 @@ function initCube() {
   );
 }
 
-function renderCube() {
+export function renderCube() {
   let Worl = _matr4.mulmatr(
     _matr4.scale(_vec3.set(0.7, 0.7, 0.7)),
     _matr4.translate(_vec3.set(0, 0, 0))

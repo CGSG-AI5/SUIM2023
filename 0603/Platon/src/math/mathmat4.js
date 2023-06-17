@@ -2,7 +2,7 @@ function D2R(degree) {
   return (degree * Math.PI) / 180;
 }
 
-class _matr4 {
+export class _matr4 {
   constructor(
     a00,
     a01,

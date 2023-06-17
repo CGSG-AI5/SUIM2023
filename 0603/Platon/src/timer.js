@@ -1,3 +1,8 @@
+import { UBO, Ubo_cell } from "./rnd/res/ubo.js";
+import { cam } from "./math/mathcam.js";
+import { _vec3 } from "./math/mathvec3.js";
+import { CamUBO } from "./rnd/rndbase.js";
+
 function Timer() {
   // Timer obtain current time in seconds method
   const getTime = () => {
@@ -34,9 +39,16 @@ function Timer() {
     }
     this.oldTime = t;
 
-    UBO.update(CamUBO, Ubo_cell.ProjDistFarTimeLocal, _vec3.set(cam.ProjDist, cam.ProjFarClip, this.localTime));
-    UBO.update(CamUBO, Ubo_cell.TimeGlobalDeltaGlobalDeltaLocal, _vec3.set(this.globalTime, this.globalDeltaTime, this.localDeltaTime));
-
+    UBO.update(
+      CamUBO,
+      Ubo_cell.ProjDistFarTimeLocal,
+      _vec3.set(cam.ProjDist, cam.ProjFarClip, this.localTime)
+    );
+    UBO.update(
+      CamUBO,
+      Ubo_cell.TimeGlobalDeltaGlobalDeltaLocal,
+      _vec3.set(this.globalTime, this.globalDeltaTime, this.localDeltaTime)
+    );
   };
 
   // Obtain FPS as string method
@@ -55,3 +67,5 @@ function Timer() {
 
   return this;
 } // End of 'Timer' function
+
+export let myTimer = new Timer();
