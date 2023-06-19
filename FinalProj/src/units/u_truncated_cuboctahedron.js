@@ -23,8 +23,12 @@ class Unit_obj {
     H,
     Z,
     Pos,
-    IsRefl,
-    rotateX
+    IsReflX,
+    IsReflY,
+    IsReflZ,
+    rotateX,
+    rotateZ,
+    
   ) {
     this.status = status;
     this.V = V;
@@ -34,25 +38,52 @@ class Unit_obj {
     this.H = H;
     this.Z = Z;
     this.Pos = Pos;
-    this.IsRefl = IsRefl;
+    this.IsReflX = IsReflX;
+    this.IsReflY = IsReflY;
+    this.IsReflZ = IsReflZ;
     this.rotateX = rotateX;
+    this.rotateZ = rotateZ;
   }
   kinematics_of_the_fall() {
-    this.Pos.y +=
-      this.V * myTimer.globalDeltaTime -
-      (g * myTimer.globalDeltaTime * myTimer.globalDeltaTime) / 2;
-    this.V -= g * myTimer.globalDeltaTime;
-    // this.rotateX =R2D(Math.acos(this.V / -V0))
-    this.rotateX -= myTimer.globalDeltaTime * 1000;
-    if (this.IsRefl) {
-      this.Pos.z +=
-        (V0 * Math.sin(D2R(this.ElevatorDrop)) * myTimer.globalDeltaTime) / 4;
-    } else {
-      this.Pos.z -=
-        V0 * Math.sin(D2R(this.ElevatorDrop)) * myTimer.globalDeltaTime;
+    if (this.IsReflY){
+      this.V.y = -this.V.y / 2;
+      this.IsReflY = 0;
     }
+      this.Pos.y +=
+        this.V.y * myTimer.globalDeltaTime -
+        (g * myTimer.globalDeltaTime * myTimer.globalDeltaTime) / 2;
+      this.V.y -= g * myTimer.globalDeltaTime;
+
+
+    if (this.IsReflZ) {
+      this.V.z = -this.V.z / 4;
+      this.IsReflZ = 0;
+    }
+    if (Math.abs(this.V.z) < 5){
+      this.V.z -= Math.sign(this.V.z) * myTimer.globalDeltaTime * myTimer.globalDeltaTime * 2;
+    }
+    if (Math.abs(this.V.z) < 0.3){
+      this.V.z = 0;
+    }
+    this.Pos.z -=
+    this.V.z * myTimer.globalDeltaTime;
+
+    if (this.IsReflX) {
+      console.log(this.V.x)
+      this.V.x = -this.V.x / 4;
+      this.IsReflX = 0;
+    }
+    // if (Math.abs(this.V.x) < 5){
+    //   this.V.x -= Math.sign(this.V.x) * myTimer.globalDeltaTime * myTimer.globalDeltaTime * 2;
+    // }
+    // if (Math.abs(this.V.x) < 0.3){
+    //   this.V.x = 0;
+    // }
     this.Pos.x -=
-      V0 * Math.sin(D2R(this.AzimuthDrop)) * myTimer.globalDeltaTime;
+      this.V.x * myTimer.globalDeltaTime;
+    this.rotateX -= myTimer.globalDeltaTime * this.V.z * 10;
+    // this.rotateZ -= myTimer.globalDeltaTime * this.V.x * 10;
+    
   }
   return_to_a_stable_position() {
     let f = (this.rotateX - (this.rotateX % 45)) / 45;
@@ -71,7 +102,16 @@ class Unit_obj {
     for (let i = 0; i < ball.length; i++) {
       if (i != ind) {
         if (_vec3.len(_vec3.sub(this.Pos, ball[i].Pos)) < 2) {
-          console.log(_vec3.len(_vec3.sub(this.Pos, ball[i].Pos)))
+          for(let j = -0.001; _vec3.len(_vec3.sub(this.Pos, ball[i].Pos)) < 1.99; j -= 0.0001){
+            
+            this.Pos.x -=
+            V0 * Math.sin(D2R(this.AzimuthDrop)) * j;
+            this.Pos.z -=
+            V0 * Math.sin(D2R(this.ElevatorDrop)) * j;
+            this.Pos.y +=
+            this.V * j - (g * j * j ) / 2;
+            this.V -= g * j;
+          }          
           return 1;
 
         }
@@ -361,7 +401,7 @@ export function initTruCubOct() {
     material.add(Mtl)
   );
 
-  ball.push(new Unit_obj(0, V0, 0, 0, 0, 0, 0, _vec3.set(0, 0, 0), 0, 0));
+  ball.push(new Unit_obj(0, _vec3.set(V0, V0, V0), 0, 0, 0, 0, 0, _vec3.set(0, 0, 0), 0, 0, 0, 0, 0));
 }
 
 export function renderTruCubOct() {
@@ -387,8 +427,10 @@ export function renderTruCubOct() {
     if (a.status == 0) {
       a.rotateX = Elevator;
       a.ElevatorDrop = Elevator;
-      a.AzimuthDrop = Azimuth;
-      a.V = V0 * Math.cos(D2R(180 - Elevator));
+      a.rotateZ = a.AzimuthDrop = Azimuth;
+      a.V.y = V0 * Math.cos(D2R(180 - Elevator));
+      a.V.z = V0 * Math.sin(D2R(a.ElevatorDrop));
+      a.V.x = V0 * Math.sin(D2R(a.AzimuthDrop));
       Worl = _matr4.mulmatr(
         _matr4.mulmatr(
           _matr4.scale(
@@ -416,7 +458,7 @@ export function renderTruCubOct() {
           ),
           _matr4.mulmatr(
             _matr4.rotateX(a.rotateX),
-            _matr4.rotateY(a.AzimuthDrop)
+            _matr4.rotateY(a.rotateZ)
           )
         ),
         _matr4.translate(a.Pos)
@@ -427,21 +469,20 @@ export function renderTruCubOct() {
       } else {
         if (a.Pos.z < -38) {
           a.status = 2;
-          a.IsRefl = 1;
-          a.rotateX /= 4;
+          a.IsReflZ = 1;
         }
         if (a.Pos.x < -19) {
           a.Pos.x = -19;
-          a.AzimuthDrop *= -1;
+          a.IsReflX = 1;
         }
         if (a.Pos.x > 17) {
           a.Pos.x = 17;
-          a.AzimuthDrop *= -1;
+          a.IsReflX = 1;
         }
 
         if (a.Pos.y < -5) {
           a.Pos.y = -5;
-          a.status = 2;
+          a.IsReflY = 1;
         }
       }
     } else if (a.status == 2) {
@@ -456,24 +497,29 @@ export function renderTruCubOct() {
             )
           ),
           _matr4.mulmatr(
-            _matr4.rotateX(-a.rotateX),
-            _matr4.rotateY(-a.AzimuthDrop)
+            _matr4.rotateX(a.rotateX),
+            _matr4.rotateZ(a.rotateZ)
           )
         ),
         _matr4.translate(a.Pos)
       );
       if (a.Pos.y < -5) {
+        a.IsReflY = 1;
         a.Pos.y = -5;
-        a.status = 3;
-        ball.push(new Unit_obj(0, V0, 0, 0, 0, 0, 0, _vec3.set(0, 0, 0), 0, 0));
+        // a.status = 3;
+        // ball.push(new Unit_obj(0, V0, 0, 0, 0, 0, 0, _vec3.set(0, 0, 0), 0, 0, 0, 0));
+      }
+      if (a.Pos.z > 0) {
+        a.status = 1;
+        a.IsReflZ = 1;
       }
       if (a.Pos.x < -19) {
         a.Pos.x = -19;
-        a.AzimuthDrop *= -1;
+        a.IsReflY = 1;
       }
       if (a.Pos.x > 17) {
         a.Pos.x = 17;
-        a.AzimuthDrop *= -1;
+        a.IsReflY = 1;
       }
     } else if (a.status == 3) {
       // a.return_to_a_stable_position();
