@@ -1,7 +1,7 @@
 import { prim, vertex } from "../rnd/prim.js";
 import { _vec3 } from "../math/mathvec3.js";
 import { material, Matlib } from "../rnd/res/material.js";
-import { _matr4, D2R, R2D} from "../math/mathmat4.js";
+import { _matr4, D2R, R2D } from "../math/mathmat4.js";
 import { myTimer } from "../timer.js";
 import { myInput } from "../input.js";
 import { cam } from "../math/mathcam.js";
@@ -9,50 +9,75 @@ import { cam } from "../math/mathcam.js";
 let ball = [];
 let Pr_tru_cub_oct;
 let col = [1, Math.sqrt(2) + 1, 2 * Math.sqrt(2) + 1];
-let V0 = 70, g = 18, Pos0;
+let V0 = 70,
+  g = 18,
+  Pos0;
 
-class Unit_obj{
-  constructor(status, V, ElevatorDrop, AzimuthDrop, S, H, Z, Pos, IsRefl, rotateX){
+class Unit_obj {
+  constructor(
+    status,
+    V,
+    ElevatorDrop,
+    AzimuthDrop,
+    S,
+    H,
+    Z,
+    Pos,
+    IsRefl,
+    rotateX
+  ) {
     this.status = status;
     this.V = V;
     this.ElevatorDrop = ElevatorDrop;
-    this.AzimuthDrop = AzimuthDrop
+    this.AzimuthDrop = AzimuthDrop;
     this.S = S;
     this.H = H;
     this.Z = Z;
     this.Pos = Pos;
     this.IsRefl = IsRefl;
-    this.rotateX = rotateX
+    this.rotateX = rotateX;
   }
-  kinematics_of_the_fall(){
-    this.Pos.y += this.V * myTimer.globalDeltaTime - g * myTimer.globalDeltaTime * myTimer.globalDeltaTime / 2;  
+  kinematics_of_the_fall() {
+    this.Pos.y +=
+      this.V * myTimer.globalDeltaTime -
+      (g * myTimer.globalDeltaTime * myTimer.globalDeltaTime) / 2;
     this.V -= g * myTimer.globalDeltaTime;
     // this.rotateX =R2D(Math.acos(this.V / -V0))
     this.rotateX -= myTimer.globalDeltaTime * 1000;
-    if (this.IsRefl){
-      this.Pos.z += V0 * Math.sin(D2R(this.ElevatorDrop)) * myTimer.globalDeltaTime / 4;
+    if (this.IsRefl) {
+      this.Pos.z +=
+        (V0 * Math.sin(D2R(this.ElevatorDrop)) * myTimer.globalDeltaTime) / 4;
+    } else {
+      this.Pos.z -=
+        V0 * Math.sin(D2R(this.ElevatorDrop)) * myTimer.globalDeltaTime;
     }
-    else{
-      this.Pos.z -= V0 * Math.sin(D2R(this.ElevatorDrop)) * myTimer.globalDeltaTime; 
-    }
-    this.Pos.x -= V0 * Math.sin(D2R(this.AzimuthDrop)) * myTimer.globalDeltaTime;
+    this.Pos.x -=
+      V0 * Math.sin(D2R(this.AzimuthDrop)) * myTimer.globalDeltaTime;
   }
-  return_to_a_stable_position(){
-  
-    let f = (this.rotateX - this.rotateX % 45) / 45;
-    if (this.rotateX != f * 45){
-      if (this.rotateX + 3 < f * 45){
+  return_to_a_stable_position() {
+    let f = (this.rotateX - (this.rotateX % 45)) / 45;
+    if (this.rotateX != f * 45) {
+      if (this.rotateX + 3 < f * 45) {
         this.rotateX += myTimer.globalDeltaTime * 80 * Math.sign(this.rotateX);
-      }
-
-      else if (this.rotateX - 3 > f * 45){
+      } else if (this.rotateX - 3 > f * 45) {
         this.rotateX -= myTimer.globalDeltaTime * 80 * Math.sign(this.rotateX);
-      }
-      else{
+      } else {
         this.rotateX = f * 45;
         this.Pos.y -= Math.abs(Math.cos(D2R(Math.abs(this.rotateX) + 45))) / 6;
       }
     }
+  }
+  intersection_sphere(ind) {
+    for (let i = 0; i < ball.length; i++) {
+      if (i != ind) {
+        if (_vec3.len(_vec3.sub(this.Pos, ball[i].Pos)) < 2) {
+          console.log(_vec3.len(_vec3.sub(this.Pos, ball[i].Pos)))
+          return 1;
+
+        }
+      }
+    }
+    return 0;
   }
 }
 export function initTruCubOct() {
@@ -75,6 +100,7 @@ export function initTruCubOct() {
                 col[3 - ((l + k + 1) % 3) - l]
               ),
               _vec3.set((m + k + i) / 7, l / 2, k),
+              _vec3.set(0, 0, 0),
               _vec3.set(0, 0, 0)
             );
           }
@@ -321,25 +347,21 @@ export function initTruCubOct() {
     prim.create_normal(Vs, i * 3);
   }
 
-  let Mtl = material.MtlGetDef();
-  Mtl = new material(
-    _vec3.set(),
-    _vec3.set(0.23125, 0.23125, 0.23125),
-    _vec3.set(0.2775, 0.2775, 0.2775),
-    _vec3.set(0.773911, 0.773911, 0.773911),
-    96.8,
-    1,
-    [-1, -1, -1, -1, -1, -1, -1, -1]
+  let Mtl = material.set(
+    ...Matlib.Turquoise,
+    [-1, -1, -1, -1, -1, -1, -1, -1],
+    0,
+    "texture"
   );
   Pr_tru_cub_oct = prim.create(
     Vs,
     Vs.length,
     indices,
     indices.length,
-    material.add(Matlib.Turquoise)
+    material.add(Mtl)
   );
 
-  ball.push(new Unit_obj(0, V0, 0, 0, 0, 0, 0, _vec3.set(0, 0, 0), 0, 0))
+  ball.push(new Unit_obj(0, V0, 0, 0, 0, 0, 0, _vec3.set(0, 0, 0), 0, 0));
 }
 
 export function renderTruCubOct() {
@@ -354,85 +376,124 @@ export function renderTruCubOct() {
 
   let Azimuth = (Math.atan2(sinP, cosP) / Math.PI) * 180;
 
-
   let Elevator = (Math.atan2(sinT, cosT) / Math.PI) * 180;
   let Worl = _matr4.identity();
 
-  ball.forEach((a) => {
-    if (myInput.Keys[87] && !a.status && a.ElevatorDrop != 0) {a.status = 1}
+  ball.forEach((a, ind) => {
+    if (myInput.Keys[87] && !a.status && a.ElevatorDrop != 0) {
+      a.status = 1;
+    }
 
-    if (a.status == 0){
+    if (a.status == 0) {
       a.rotateX = Elevator;
       a.ElevatorDrop = Elevator;
       a.AzimuthDrop = Azimuth;
       a.V = V0 * Math.cos(D2R(180 - Elevator));
       Worl = _matr4.mulmatr(
         _matr4.mulmatr(
-        _matr4.scale(
-          _vec3.set(
-            1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
-            1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
-            1 / _vec3.len(_vec3.set(col[0], col[1], col[2]))
-          )
+          _matr4.scale(
+            _vec3.set(
+              1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
+              1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
+              1 / _vec3.len(_vec3.set(col[0], col[1], col[2]))
+            )
+          ),
+          _matr4.mulmatr(_matr4.rotateX(Elevator), _matr4.rotateY(Azimuth))
         ),
-        _matr4.mulmatr(_matr4.rotateX(Elevator), _matr4.rotateY(Azimuth))),_matr4.translate(_vec3.sub(cam.At, _vec3.set(0, 1, 0)))
+        _matr4.translate(_vec3.sub(cam.At, _vec3.set(0, 1, 0)))
       );
-      a.Pos = _vec3.set(cam.At.x, cam.At.y - 1, cam.At.z)
-    }
-    else if (a.status == 1){
-    a.kinematics_of_the_fall();
-    Worl = _matr4.mulmatr(
-        _matr4.mulmatr(
-        _matr4.scale(
-          _vec3.set(
-            1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
-            1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
-            1 / _vec3.len(_vec3.set(col[0], col[1], col[2]))
-          )
-        ), _matr4.mulmatr(_matr4.rotateX(a.rotateX), _matr4.rotateY(a.AzimuthDrop))), _matr4.translate(a.Pos)
-      );
-      if (a.Pos.z < -38) {
-        a.status = 2;
-        a.IsRefl = 1;
-        a.rotateX /= 4;
-      }
-      if (a.Pos.y < -5) {
-        a.Pos.y = -5;
-        a.status = 2;
-      }
-    }
-    else if (a.status == 2){
+      a.Pos = _vec3.set(cam.At.x, cam.At.y - 1, cam.At.z);
+    } else if (a.status == 1) {
       a.kinematics_of_the_fall();
       Worl = _matr4.mulmatr(
         _matr4.mulmatr(
-        _matr4.scale(
-          _vec3.set(
-            1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
-            1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
-            1 / _vec3.len(_vec3.set(col[0], col[1], col[2]))
+          _matr4.scale(
+            _vec3.set(
+              1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
+              1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
+              1 / _vec3.len(_vec3.set(col[0], col[1], col[2]))
+            )
+          ),
+          _matr4.mulmatr(
+            _matr4.rotateX(a.rotateX),
+            _matr4.rotateY(a.AzimuthDrop)
           )
-        ), _matr4.mulmatr(_matr4.rotateX(-a.rotateX), _matr4.rotateY(-a.AzimuthDrop))), _matr4.translate(a.Pos)
+        ),
+        _matr4.translate(a.Pos)
+      );
+      if (a.intersection_sphere(ind)) {
+        a.status = 3;
+        ball.push(new Unit_obj(0, V0, 0, 0, 0, 0, 0, _vec3.set(0, 0, 0), 0, 0));
+      } else {
+        if (a.Pos.z < -38) {
+          a.status = 2;
+          a.IsRefl = 1;
+          a.rotateX /= 4;
+        }
+        if (a.Pos.x < -19) {
+          a.Pos.x = -19;
+          a.AzimuthDrop *= -1;
+        }
+        if (a.Pos.x > 17) {
+          a.Pos.x = 17;
+          a.AzimuthDrop *= -1;
+        }
+
+        if (a.Pos.y < -5) {
+          a.Pos.y = -5;
+          a.status = 2;
+        }
+      }
+    } else if (a.status == 2) {
+      a.kinematics_of_the_fall();
+      Worl = _matr4.mulmatr(
+        _matr4.mulmatr(
+          _matr4.scale(
+            _vec3.set(
+              1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
+              1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
+              1 / _vec3.len(_vec3.set(col[0], col[1], col[2]))
+            )
+          ),
+          _matr4.mulmatr(
+            _matr4.rotateX(-a.rotateX),
+            _matr4.rotateY(-a.AzimuthDrop)
+          )
+        ),
+        _matr4.translate(a.Pos)
       );
       if (a.Pos.y < -5) {
         a.Pos.y = -5;
         a.status = 3;
-        ball.push(new Unit_obj(0, V0, 0, 0, 0, 0, 0, _vec3.set(0, 0, 0), 0 , 0));
+        ball.push(new Unit_obj(0, V0, 0, 0, 0, 0, 0, _vec3.set(0, 0, 0), 0, 0));
       }
-    }
-    else if (a.status == 3){
-     // a.return_to_a_stable_position();
+      if (a.Pos.x < -19) {
+        a.Pos.x = -19;
+        a.AzimuthDrop *= -1;
+      }
+      if (a.Pos.x > 17) {
+        a.Pos.x = 17;
+        a.AzimuthDrop *= -1;
+      }
+    } else if (a.status == 3) {
+      // a.return_to_a_stable_position();
       Worl = _matr4.mulmatr(
         _matr4.mulmatr(
-        _matr4.scale(
-          _vec3.set(
-            1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
-            1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
-            1 / _vec3.len(_vec3.set(col[0], col[1], col[2]))
+          _matr4.scale(
+            _vec3.set(
+              1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
+              1 / _vec3.len(_vec3.set(col[0], col[1], col[2])),
+              1 / _vec3.len(_vec3.set(col[0], col[1], col[2]))
+            )
+          ),
+          _matr4.mulmatr(
+            _matr4.rotateX(-a.rotateX),
+            _matr4.rotateY(-a.AzimuthDrop)
           )
-        ), _matr4.mulmatr(_matr4.rotateX(-a.rotateX), _matr4.rotateY(-a.AzimuthDrop))), _matr4.translate(a.Pos)
+        ),
+        _matr4.translate(a.Pos)
       );
     }
     prim.draw(Pr_tru_cub_oct, Worl);
   });
-
 }

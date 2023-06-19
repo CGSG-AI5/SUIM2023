@@ -37,8 +37,8 @@ export function renderCam() {
   if (Elevator < 60) Elevator = 60;
   else if (Elevator > 120) Elevator = 120;
 
-  // if (Azimuth < -45) Azimuth = -45;
-  // else if (Azimuth > 45) Azimuth = 45;  
+  if (Azimuth < -45) Azimuth = -45;
+  else if (Azimuth > 45) Azimuth = 45;  
 
   Dist += myTimer.globalDeltaTime * (2 * myInput.MouseWheel);
 

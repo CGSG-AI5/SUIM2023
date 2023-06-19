@@ -11,6 +11,8 @@
     precision highp float;
 
     uniform sampler2D uSampler;
+    uniform sampler2D tex0;
+    uniform samplerCube u_texture;
 
     uniform BaseData
     {
@@ -58,13 +60,20 @@
       return color;
     }
       void main() {
+        vec4 tc = texture(tex0,DrawTexCoord);
+          if (Tex0123.x != 0.0){
+            if (tc.a > 0.2)
+              o_color = tc;
+            else
+              discard;
+          }
+          else{
+            o_color =  vec4(shade(DrawPos, normalize(DrawNormal)), 1.0);
+          }
 
-        vec4 tc = texture(uSampler, DrawTexCoord);
-        if (tc.a > 0.2)
-          o_color = tc;
-        else
-          discard;
-
+        // else {
+        //   o_color =  vec4(shade(DrawPos, normalize(DrawNormal)), 1.0);
+        // }
         // o_color =  vec4(shade(DrawPos, normalize(DrawNormal)), 1.0);
         // // o_color =  vec4(normalize(DrawNormal), 1.0);
         // o_color =  vec4(DrawColor, 1.0);

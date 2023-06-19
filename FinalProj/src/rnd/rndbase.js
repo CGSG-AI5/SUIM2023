@@ -14,6 +14,8 @@ import { initTetr, renderTetr } from "../units/u_tetraider.js";
 import { initWall, renderWall } from "../units/u_wall.js";
 import { initFloor, renderFloor } from "../units/u_floor.js";
 import { initText, renderText } from "../units/u_text.js";
+import { initWallLR, renderWallLR } from "../units/u_wall_LR.js";
+
 import {
   initTruCubOct,
   renderTruCubOct,
@@ -59,7 +61,7 @@ export function rndInit(s, n) {
   shaderInit(s, n);
 
   // initTetr();
-  //initCube();
+
   // initHex();
   // initIso();
   // // initTruTetr();
@@ -68,10 +70,12 @@ export function rndInit(s, n) {
   // initTruOct();
   // initDod();
   // initRhom();
-  // initFloor();
-  // initWall();
-  // initTruCubOct();
+  initFloor();
+  initWall();
+  initTruCubOct();
   initText();
+  //initCube();
+  initWallLR();
 }
 
 export function render() {
@@ -81,7 +85,7 @@ export function render() {
   renderCam();
   // renderTetr();
   // renderHex();
-  //renderCube();
+
   // renderIso();
   // renderDod();
   // renderTruTetr();
@@ -89,8 +93,10 @@ export function render() {
   //renderTruCub();
   //renderTruOct();
   // renderRhom();
-  // renderFloor();
-  // renderWall();
-  // renderTruCubOct();
+  renderFloor();
+  renderWall();
+  renderTruCubOct();
   renderText();
+  //renderCube();
+  renderWallLR();
 }

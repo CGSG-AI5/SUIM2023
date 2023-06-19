@@ -1,6 +1,8 @@
 import { UBO } from "./ubo.js";
 import { _vec3 } from "../../math/mathvec3.js";
 import { shad } from "./shader.js";
+import { Textures } from "./texture.js";
+import { gl } from "../rnddata.js";
 
 export let Material = [];
 
@@ -28,25 +30,34 @@ export class material {
       _vec3.set(0.3, 0.3, 0.3),
       30,
       1,
-      [-1, -1, -1, -1, -1, -1, -1, -1], s[0]
+      [-1, -1, -1, -1, -1, -1, -1, -1],
+      shad[0].Id
     );
   }
-  static set(Name, Ka, Kd, Ks, Ph, Trans, Tex, UboNo, ShaderName){
+  static set(Name, Ka, Kd, Ks, Ph, Trans, Tex, UboNo, ShaderName) {
     let sh = 0;
-    for (let i = 0; i < shad.length; i++){
-      if (shad[i].Name == ShaderName){
+    for (let i = 0; i < shad.length; i++) {
+      if (shad[i].Name == ShaderName) {
         sh = i;
       }
     }
-    return new material (Name, Ka, Kd, Ks, Ph, Trans, Tex, UboNo, shad[sh].Id);
+    return new material(Name, Ka, Kd, Ks, Ph, Trans, Tex, UboNo, shad[sh].Id);
   }
   static add(Mtl) {
-
     Mtl.UboNo = UBO.add(Mtl, "Material");
     Material.push(Mtl);
     return Material.length - 1;
   }
   static applay(MtlNo, point) {
+    let unifomTex;
+    for (let i = 0; i < 8; i++) {
+      if (Material[MtlNo].Tex[i] != -1) {
+        unifomTex = gl.getUniformLocation(Material[MtlNo].ShdNo, "tex" + i);
+        gl.activeTexture(gl.TEXTURE0 + i);
+        gl.bindTexture(gl.TEXTURE_2D, Textures[Material[MtlNo].Tex[i]].id);
+        gl.uniform1i(unifomTex, i);
+      }
+    }
     UBO.applay(Material[MtlNo].UboNo, point, Material[MtlNo].ShdNo);
   }
 }
@@ -59,7 +70,6 @@ export let Matlib = {
     _vec3.set(0.5, 0.5, 0.5),
     32,
     1,
-    [-1, -1, -1, -1, -1, -1, -1, -1]
   ],
   Brass: new material(
     "Brass",
@@ -97,15 +107,14 @@ export let Matlib = {
     1,
     [-1, -1, -1, -1, -1, -1, -1, -1]
   ),
-  Gold: new material(
+  Gold: [
     "Gold",
     _vec3.set(0.24725, 0.1995, 0.0745),
     _vec3.set(0.75164, 0.60648, 0.22648),
     _vec3.set(0.628281, 0.555802, 0.366065),
     51.2,
     1,
-    [-1, -1, -1, -1, -1, -1, -1, -1]
-  ),
+  ],
   Peweter: new material(
     "Peweter",
     _vec3.set(0.10588, 0.058824, 0.113725),
@@ -133,24 +142,21 @@ export let Matlib = {
     1,
     [-1, -1, -1, -1, -1, -1, -1, -1]
   ),
-  Turquoise: new material(
+  Turquoise:[
     "Turquoise",
     _vec3.set(0.1, 0.18725, 0.1745),
     _vec3.set(0.396, 0.74151, 0.69102),
     _vec3.set(0.297254, 0.30829, 0.306678),
     12.8,
-    1,
-    [-1, -1, -1, -1, -1, -1, -1, -1]
-  ),
-  Ruby: new material(
+    1,],
+  Ruby: [
     "Ruby",
     _vec3.set(0.1745, 0.01175, 0.01175),
     _vec3.set(0.61424, 0.04136, 0.04136),
     _vec3.set(0.727811, 0.626959, 0.626959),
     76.8,
     1,
-    [-1, -1, -1, -1, -1, -1, -1, -1]
-  ),
+  ],
   Polished_Gold: new material(
     "Polished_Gold",
     _vec3.set(0.24725, 0.2245, 0.0645),
@@ -187,15 +193,13 @@ export let Matlib = {
     1,
     [-1, -1, -1, -1, -1, -1, -1, -1]
   ),
-  Obsidian: new material(
+  Obsidian: [
     "Obsidian",
     _vec3.set(0.05375, 0.05, 0.06625),
     _vec3.set(0.18275, 0.17, 0.22525),
     _vec3.set(0.332741, 0.328634, 0.346435),
     38.4,
-    1,
-    [-1, -1, -1, -1, -1, -1, -1, -1]
-  ),
+    1,],
   Pearl: new material(
     "Pearl",
     _vec3.set(0.25, 0.20725, 0.20725),

@@ -17,11 +17,23 @@ export class vertex {
     this.T = T;
   }
   static vert2arr(a) {
-    return [a.P.x, a.P.y, a.P.z, a.C.x, a.C.y, a.C.z, a.N.x, a.N.y, a.N.z, a.T.x, a.T.y];
+    return [
+      a.P.x,
+      a.P.y,
+      a.P.z,
+      a.C.x,
+      a.C.y,
+      a.C.z,
+      a.N.x,
+      a.N.y,
+      a.N.z,
+      a.T.x,
+      a.T.y,
+    ];
   }
 
   static create(a) {
-    return new vertex(a.P, a.C, a.N);
+    return new vertex(a.P, a.C, a.N, a.T);
   }
 }
 
@@ -43,7 +55,7 @@ export class prim {
     let primVertexArray = gl.createVertexArray();
     gl.bindVertexArray(primVertexArray);
 
-    unifomTex = gl.getUniformLocation(Material[MtlNo].ShdNo, "tex");
+    // unifomTex = gl.getUniformLocation(Material[MtlNo].ShdNo, "tex");
 
     let primVertexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, primVertexBuffer);
@@ -79,50 +91,72 @@ export class prim {
     let posNorm = gl.getAttribLocation(Material[MtlNo].ShdNo, "in_normal");
 
     if (posNorm != -1) {
-      gl.vertexAttribPointer(posNorm, 3, gl.FLOAT, false, Fsize * 11, Fsize * 6);
+      gl.vertexAttribPointer(
+        posNorm,
+        3,
+        gl.FLOAT,
+        false,
+        Fsize * 11,
+        Fsize * 6
+      );
       gl.enableVertexAttribArray(posNorm);
     }
 
-    let posTexCoord = gl.getAttribLocation(Material[MtlNo].ShdNo, "in_texcoord");
+    let posTexCoord = gl.getAttribLocation(
+      Material[MtlNo].ShdNo,
+      "in_texcoord"
+    );
 
     if (posTexCoord != -1) {
-      gl.vertexAttribPointer(posTexCoord, 2, gl.FLOAT, false, Fsize * 11, Fsize * 9);
+      gl.vertexAttribPointer(
+        posTexCoord,
+        2,
+        gl.FLOAT,
+        false,
+        Fsize * 11,
+        Fsize * 9
+      );
       gl.enableVertexAttribArray(posTexCoord);
     }
 
-    id = gl.createTexture()
-    gl.bindTexture(gl.TEXTURE_2D, id);
-    // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0,
-    //               gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 0]));
-    
-    const img = new Image();
-    img.src = "bin/image/cgsg.png";
-    img.onload = () => {
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA,
-                    gl.RGBA, gl.UNSIGNED_BYTE, img);
-      gl.generateMipmap(gl.TEXTURE_2D);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER,
-                                                  gl.LINEAR_MIPMAP_LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    };
+    // let EndBuf = ["PosX.png", "NegX.png", "PosY.png", "NegY.png", "PosZ.png", "NegZ.png"],
+    //   id = gl.createTexture();
 
-    id1 = gl.createTexture()
-    gl.bindTexture(gl.TEXTURE_2D, id1);
+    // gl.bindTexture(gl.TEXTURE_CUBE_MAP, id);
 
-    const img1 = new Image();
-    img1.src = "bin/image/scelet.png";
-    img1.onload = () => {
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA,
-                    gl.RGBA, gl.UNSIGNED_BYTE, img1);
-      gl.generateMipmap(gl.TEXTURE_2D);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER,
-                                                  gl.LINEAR_MIPMAP_LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    };
+
+
+    // gl.texParameteri(
+    //   gl.TEXTURE_CUBE_MAP,
+    //   gl.TEXTURE_MIN_FILTER,
+    //   gl.LINEAR_MIPMAP_LINEAR
+    // );
+    // gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    // gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    // gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    // gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE);
+
+    // for (let i = 0; i < 6; i++) {
+    //   if (i == 0){
+    //     gl.texStorage2D(gl.TEXTURE_CUBE_MAP, 0, gl.RGBA, 512, 512);
+    //   }
+    //   const img = new Image();
+    //   img.src = "bin/image/lagoon/" + EndBuf[i];
+    //   img.onload = () => {
+    //     gl.texSubImage2D(
+    //       gl.TEXTURE_CUBE_MAP_POSITIVE_X + i,
+    //       0, 
+    //       0,
+    //       0,
+    //       gl.RGBA,
+    //       gl.UNSIGNED_BYTE,
+    //       img
+    //     );
+    //   };
+    // }
+
+    // gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
+    // gl.bindTexture(gl.TEXTURE_CUBE_MAP, id);
 
     return new prim(
       primVertexArray,
@@ -148,11 +182,11 @@ export class prim {
     UBO.update(CamUBO, Ubo_cell.MatrWInv, winv);
     UBO.applay(CamUBO, 0, Material[Pr.MtlNo].ShdNo);
     material.applay(Pr.MtlNo, 1);
-    
 
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, id);
-    gl.uniform1i(unifomTex, 0);
+    // unifomTex = gl.getUniformLocation(Material[Pr.MtlNo].ShdNo, "u_texture");
+    // gl.activeTexture(gl.TEXTURE0);
+    // gl.bindTexture(gl.TEXTURE_CUBE_MAP, id);
+    // gl.uniform1i(unifomTex, 0);
 
     gl.drawElements(
       gl.TRIANGLES, // TRIANGLES, TRIANGLE_STRIP

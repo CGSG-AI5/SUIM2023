@@ -121,7 +121,8 @@ export class UBO {
           Ubo.Trans,
           1,
           1,
-          ...Ubo.Tex,
+          ...[Ubo.Tex[0] != -1, Ubo.Tex[1] != -1, Ubo.Tex[2] != -1, Ubo.Tex[3] != -1,
+              Ubo.Tex[4] != -1, Ubo.Tex[5] != -1, Ubo.Tex[6] != -1, Ubo.Tex[7] != -1],
         ]),
         gl.STATIC_DRAW
       );
@@ -188,7 +189,7 @@ export class UBO {
     let blk_loc = gl.getUniformBlockIndex(ShdNo, Ubos[id].name);
 
     gl.uniformBlockBinding(ShdNo, blk_loc, point);
-
+    
     gl.bindBufferBase(gl.UNIFORM_BUFFER, point, Ubos[id].uboid);
   }
 }

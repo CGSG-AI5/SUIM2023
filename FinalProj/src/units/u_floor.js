@@ -12,21 +12,25 @@ export function initFloor() {
   Vrts[0] = new vertex(
     _vec3.set(-1, -1, 5),
     _vec3.set(0.47, 0.3, 0.27),
+    _vec3.set(0, 1, 0),
     _vec3.set(0, 1, 0)
   );
   Vrts[1] = new vertex(
     _vec3.set(1, -1, -1),
     _vec3.set(0.47, 0.3, 0.27),
+    _vec3.set(0, 1, 0),
     _vec3.set(0, 1, 0)
   );
   Vrts[2] = new vertex(
     _vec3.set(1, -1, 5),
     _vec3.set(0.47, 0.3, 0.27),
+    _vec3.set(0, 1, 0),
     _vec3.set(0, 1, 0)
   );
   Vrts[3] = new vertex(
     _vec3.set(-1, -1, -1),
     _vec3.set(0.47, 0.3, 0.27),
+    _vec3.set(0, 1, 0),
     _vec3.set(0, 1, 0)
   );
 
@@ -35,31 +39,27 @@ export function initFloor() {
 
     1, 0, 3,
   ];
-  let Mtl = material.MtlGetDef();
-  Mtl = new material(
-    _vec3.set(),
-    _vec3.set(0.23125, 0.23125, 0.23125),
-    _vec3.set(0.2775, 0.2775, 0.2775),
-    _vec3.set(0.773911, 0.773911, 0.773911),
-    9.8,
-    1,
-    [-1, -1, -1, -1, -1, -1, -1, -1]
+  let Mtl;
+  Mtl = material.set(
+    ...Matlib.Ruby,
+    [-1, -1, -1, -1, -1, -1, -1, -1],
+    0,
+    "texture"
   );
+
   Pr_floor = prim.create(
     Vrts,
     Vrts.length,
     indices,
     indices.length,
-    material.add(Matlib.Ruby)
+    material.add(Mtl)
   );
 }
 
 export function renderFloor() {
-
-
   let Worl = _matr4.mulmatr(
-    _matr4.scale(_vec3.set(10, 1, 10)),
-    _matr4.translate(_vec3.set(0, -5, -25))
+    _matr4.scale(_vec3.set(20, 1, 10)),
+    _matr4.translate(_vec3.set(0, -5, -30))
   );
 
   prim.draw(Pr_floor, Worl);
