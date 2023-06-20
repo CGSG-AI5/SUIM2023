@@ -142,13 +142,14 @@ export let Matlib = {
     1,
     [-1, -1, -1, -1, -1, -1, -1, -1]
   ),
-  Turquoise:[
+  Turquoise: [
     "Turquoise",
     _vec3.set(0.1, 0.18725, 0.1745),
     _vec3.set(0.396, 0.74151, 0.69102),
     _vec3.set(0.297254, 0.30829, 0.306678),
     12.8,
-    1,],
+    1,
+  ],
   Ruby: [
     "Ruby",
     _vec3.set(0.1745, 0.01175, 0.01175),
@@ -199,7 +200,8 @@ export let Matlib = {
     _vec3.set(0.18275, 0.17, 0.22525),
     _vec3.set(0.332741, 0.328634, 0.346435),
     38.4,
-    1,],
+    1,
+  ],
   Pearl: new material(
     "Pearl",
     _vec3.set(0.25, 0.20725, 0.20725),
@@ -209,15 +211,14 @@ export let Matlib = {
     1,
     [-1, -1, -1, -1, -1, -1, -1, -1]
   ),
-  Emerald: new material(
+  Emerald: [
     "Emerald",
     _vec3.set(0.0215, 0.1745, 0.0215),
     _vec3.set(0.07568, 0.61424, 0.07568),
     _vec3.set(0.633, 0.727811, 0.633),
     76.8,
     1,
-    [-1, -1, -1, -1, -1, -1, -1, -1]
-  ),
+  ],
   Black_Rubber: new material(
     "Black_Rubber",
     _vec3.set(0.02, 0.02, 0.02),

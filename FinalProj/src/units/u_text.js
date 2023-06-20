@@ -3,7 +3,7 @@ import { _vec3 } from "../math/mathvec3.js";
 import { material, Matlib } from "../rnd/res/material.js";
 import { _matr4 } from "../math/mathmat4.js";
 import { myInput } from "../input.js";
-import { Tex } from "../rnd/res/texture.js";
+import { Tex, Textures } from "../rnd/res/texture.js";
 
 let Pr_text;
 
@@ -46,6 +46,7 @@ export function initText() {
     0,
     "texture"
   );
+  console.log(Textures);
   //   Mtl = new material(
   //     _vec3.set(),
   //     _vec3.set(0.23125, 0.23125, 0.23125),

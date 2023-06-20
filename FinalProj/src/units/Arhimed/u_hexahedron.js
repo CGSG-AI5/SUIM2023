@@ -1,8 +1,8 @@
-import { prim, vertex } from "../rnd/prim.js";
-import { _vec3 } from "../math/mathvec3.js";
-import { material, Matlib } from "../rnd/res/material.js";
-import { _matr4 } from "../math/mathmat4.js";
-import { myTimer } from "../timer.js";
+import { prim, vertex } from "../../rnd/prim.js";
+import { _vec3 } from "../../math/mathvec3.js";
+import { material, Matlib } from "../../rnd/res/material.js";
+import { _matr4 } from "../../math/mathmat4.js";
+import { myTimer } from "../../timer.js";
 let Pr_hex;
 
 export function initHex() {

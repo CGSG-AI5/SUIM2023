@@ -27,7 +27,7 @@ export function renderCam() {
   Azimuth = (Math.atan2(sinP, cosP) / Math.PI) * 180;
   Elevator = (Math.atan2(sinT, cosT) / Math.PI) * 180;
 
-  let key = 'AD';
+  let key = "AD";
 
   Azimuth +=
     myTimer.globalDeltaTime * 1.5 * (-5 * myInput.MouseClickLeft * myInput.Mdx);
@@ -37,11 +37,10 @@ export function renderCam() {
   if (Elevator < 60) Elevator = 60;
   else if (Elevator > 120) Elevator = 120;
 
-  if (Azimuth < -45) Azimuth = -45;
-  else if (Azimuth > 45) Azimuth = 45;  
+  // if (Azimuth < -45) Azimuth = -45;
+  // else if (Azimuth > 45) Azimuth = 45;
 
   Dist += myTimer.globalDeltaTime * (2 * myInput.MouseWheel);
-
 
   // console.log(key.charCodeAt(0));
   if (Dist < 0.1) Dist = 0.1;
@@ -49,18 +48,22 @@ export function renderCam() {
     // sx = ((((myInput.Keys[key.charCodeAt(0)] - myInput.Keys[key.charCodeAt(1)]) * Wp * 8) / 1200) * Dist) / -cam.ProjDist;
     // sy = (((myInput.Mdy * Hp) / 1200) * Dist) / cam.ProjDist;
 
-    dv = _vec3.set((-myInput.Keys[key.charCodeAt(0)] + myInput.Keys[key.charCodeAt(1)]) * Wp * 3, 0, 0);
+    dv = _vec3.set(
+      (-myInput.Keys[key.charCodeAt(0)] + myInput.Keys[key.charCodeAt(1)]) *
+        Wp *
+        3,
+      0,
+      0
+    );
 
     cam.At = _vec3.add(cam.At, dv);
     cam.Loc = _vec3.add(cam.Loc, dv);
 
-    if (cam.At.x > 10)
-    {
+    if (cam.At.x > 10) {
       cam.At.x = 10;
       cam.Loc.x = 10;
     }
-    if (cam.At.x < -10)
-    {
+    if (cam.At.x < -10) {
       cam.At.x = -10;
       cam.Loc.x = -10;
     }

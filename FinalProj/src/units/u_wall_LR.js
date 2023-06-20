@@ -41,7 +41,7 @@ export function initWallLR() {
   ];
   let Mtl;
   Mtl = material.set(
-    ...Matlib.Gold,
+    ...Matlib.Emerald,
     [-1, -1, -1, -1, -1, -1, -1, -1],
     0,
     "texture"
@@ -57,16 +57,15 @@ export function initWallLR() {
 }
 
 export function renderWallLR() {
+  let Worl = _matr4.mulmatr(
+    _matr4.scale(_vec3.set(1, 6, 15)),
+    _matr4.translate(_vec3.set(19, 0, -10))
+  );
+  // prim.draw(Pr_wall_lr, Worl);
 
-    let Worl = _matr4.mulmatr(
-      _matr4.scale(_vec3.set(1, 6, 15)),
-      _matr4.translate(_vec3.set(19, 0, -10))
-    );
-    prim.draw(Pr_wall_lr, Worl);
-
-    Worl = _matr4.mulmatr(
-        _matr4.scale(_vec3.set(1, 6, 15)),
-        _matr4.translate(_vec3.set(-21, 0, -10))
-      );
-    prim.draw(Pr_wall_lr, Worl);
+  Worl = _matr4.mulmatr(
+    _matr4.scale(_vec3.set(1, 6, 15)),
+    _matr4.translate(_vec3.set(-21, 0, -10))
+  );
+  prim.draw(Pr_wall_lr, Worl);
 }

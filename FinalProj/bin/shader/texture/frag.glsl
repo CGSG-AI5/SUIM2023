@@ -10,9 +10,8 @@
 
     precision highp float;
 
-    uniform sampler2D uSampler;
     uniform sampler2D tex0;
-    uniform samplerCube u_texture;
+    uniform sampler2D tex1;
 
     uniform BaseData
     {
@@ -43,7 +42,7 @@
 
     vec3 shade (vec3 P, vec3 N)
     {
-      vec3 L = normalize(vec3(1.0, 2.0, 3.0));
+      vec3 L = normalize(vec3(2.0, 2.0, 3.0));
       vec3 LC = vec3(1.0, 1.0, 1.0);
       vec3 V = normalize(P - CamLoc.xyz);
 
@@ -60,23 +59,16 @@
       return color;
     }
       void main() {
-        vec4 tc = texture(tex0,DrawTexCoord);
+        vec4 tc1 = texture(tex0, DrawTexCoord);
           if (Tex0123.x != 0.0){
-            if (tc.a > 0.2)
-              o_color = tc;
+            if (tc1.a > 0.2)
+              o_color = tc1;
             else
               discard;
           }
           else{
             o_color =  vec4(shade(DrawPos, normalize(DrawNormal)), 1.0);
-          }
+          } 
 
-        // else {
-        //   o_color =  vec4(shade(DrawPos, normalize(DrawNormal)), 1.0);
-        // }
-        // o_color =  vec4(shade(DrawPos, normalize(DrawNormal)), 1.0);
-        // // o_color =  vec4(normalize(DrawNormal), 1.0);
-        // o_color =  vec4(DrawColor, 1.0);
-
-    
+      // o_color = tc;   
     }

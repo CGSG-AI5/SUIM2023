@@ -7,14 +7,15 @@ import { myTimer } from "../timer.js";
 import { shaderInit } from "./res/shader.js";
 import { initCube, renderCube } from "../units/u_cube.js";
 import { initCam, renderCam } from "../units/u_control.js";
-import { initDod, renderDod } from "../units/u_dodecahedron.js";
-import { initHex, renderHex } from "../units/u_hexahedron.js";
-import { initIso, renderIso } from "../units/u_isocahedron.js";
+import { initDod, renderDod } from "../units/Arhimed/u_dodecahedron.js";
+import { initHex, renderHex } from "../units/Arhimed/u_hexahedron.js";
+import { initIso, renderIso } from "../units/Arhimed/u_isocahedron.js";
 import { initTetr, renderTetr } from "../units/u_tetraider.js";
 import { initWall, renderWall } from "../units/u_wall.js";
 import { initFloor, renderFloor } from "../units/u_floor.js";
 import { initText, renderText } from "../units/u_text.js";
 import { initWallLR, renderWallLR } from "../units/u_wall_LR.js";
+import { initSphere, renderSphere } from "../units/u_sphere.js";
 
 import {
   initTruCubOct,
@@ -72,9 +73,9 @@ export function rndInit(s, n) {
   // initRhom();
   initFloor();
   initWall();
-  initTruCubOct();
+  //initTruCubOct();
   initText();
-  //initCube();
+  initSphere();
   initWallLR();
 }
 
@@ -93,10 +94,12 @@ export function render() {
   //renderTruCub();
   //renderTruOct();
   // renderRhom();
+  renderText();
+  renderSphere();
   renderFloor();
   renderWall();
-  renderTruCubOct();
-  renderText();
+  //renderTruCubOct();
+
   //renderCube();
   renderWallLR();
 }

@@ -10,13 +10,27 @@ export class Tex {
 
   static create(FileName) {
     let id = gl.createTexture();
+    let n = Textures.length;
+    Textures.push(new Tex(FileName, id));
     gl.bindTexture(gl.TEXTURE_2D, id);
-    // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0,
-    //               gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 0]));
+
+
+    gl.texImage2D(
+      gl.TEXTURE_2D,
+      0,
+      gl.RGBA,
+      1,
+      1,
+      0,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      new Uint8Array([255, 255, 255, 0])
+    );
 
     const img = new Image();
     img.src = "bin/image/" + FileName;
     img.onload = () => {
+      gl.bindTexture(gl.TEXTURE_2D, Textures[n].id);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
       gl.generateMipmap(gl.TEXTURE_2D);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
@@ -28,7 +42,7 @@ export class Tex {
       );
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     };
-    Textures.push(new Tex(FileName, id));
-    return Textures.length - 1;
+
+    return n;
   }
 }
