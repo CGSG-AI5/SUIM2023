@@ -30,7 +30,9 @@ export class body {
     let cos =
       (_vec3.dot(_vec3.neg(this.V), n) * _vec3.dot(_vec3.neg(this.V), n)) /
       (_vec3.len(this.V) * _vec3.len(this.V));
-    this.omega = _vec3.add(this.omega,_vec3.mulnum(_vec3.neg(this.V), 0.5 / 0.4));
+      if (Math.abs(_vec3.len(this.V)) < 0.5){this.V = _vec3.set(0, 0, 0)}
+      this.omega = _vec3.add(this.omega,_vec3.mulnum(_vec3.neg(this.V), 0.5 / 0.4));
+    console.log(this.omega)
 
     this.V = _vec3.mulnum(this.V, Math.sqrt(1 + (this.k * this.k - 1) * cos));
     if (n.x != 0){
@@ -42,5 +44,6 @@ export class body {
     if (n.z != 0){
         this.V.z *= -1;        
     }
+    
   }
 }
