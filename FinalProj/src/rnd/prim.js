@@ -168,6 +168,84 @@ export class prim {
     );
   }
 
+  static create_sphere(W, H, R, MtlNo){
+    let Vrts = [], Ind = [];
+    for (let i = 0, theta = Math.PI, k = 0; i < H; i++, theta -= Math.PI / (H - 1)) {
+      for (let j = 0, phi = 0; j < W; j++, phi += (2 * Math.PI) / (W - 1)) {
+        Vrts[k++] = new vertex(
+          _vec3.set(
+            Math.sin(theta) * Math.sin(phi) * R,
+            Math.cos(theta) * R,
+            Math.sin(theta) * Math.cos(phi) * R
+          ),
+          _vec3.set(
+            Math.sin(theta) * Math.sin(phi),
+            Math.cos(theta),
+            Math.sin(theta) * Math.cos(phi)
+          ),
+          _vec3.set(
+            Math.sin(theta) * Math.sin(phi),
+            Math.cos(theta),
+            Math.sin(theta) * Math.cos(phi)
+          ),
+          _vec3.set(j / (W - 1), i / (H - 1), 0)
+        );
+      }
+    }
+  
+    for (let k = 0, f = 0, i = 0; i < H - 1; i++, k++) {
+      for (let j = 0; j < W - 1; j++, k++) {
+        Ind[f++] = k;
+        Ind[f++] = k + 1;
+        Ind[f++] = k + W;
+  
+        Ind[f++] = k + W + 1;
+        Ind[f++] = k + 1;
+        Ind[f++] = k + W;
+      }
+    }
+    return prim.create(Vrts, Vrts.length, Ind, Ind.length, MtlNo);
+  }
+
+  static create_sphere1(W, H, R, MtlNo){
+    let Vrts = [], Ind = [];
+    for (let i = 0, theta = Math.PI, k = 0; i < H; i++, theta -= Math.PI / (H - 1)) {
+      for (let j = 0, phi = 0; j < W; j++, phi += (2 * Math.PI) / (W - 1)) {
+        Vrts[k++] = new vertex(
+          _vec3.set(
+            Math.sin(theta) * Math.sin(phi) * R,
+            Math.cos(theta) * R,
+            Math.sin(theta) * Math.cos(phi) * R
+          ),
+          _vec3.set(
+            Math.sin(theta) * Math.sin(phi),
+            Math.cos(theta),
+            Math.sin(theta) * Math.cos(phi)
+          ),
+          _vec3.set(
+            Math.sin(theta) * Math.sin(phi),
+            Math.cos(theta),
+            Math.sin(theta) * Math.cos(phi)
+          ),
+          _vec3.set(j / (W - 1), i / (H - 1), 0)
+        );
+      }
+    }
+  
+    for (let k = 0, f = 0, i = 0; i < (H - 1); i++, k++) {
+      for (let j = 0; j < W - 1; j++, k++) {
+        Ind[f++] = k;
+        Ind[f++] = k + 1;
+        Ind[f++] = k + W;
+  
+        Ind[f++] = k + W + 1;
+        Ind[f++] = k + 1;
+        Ind[f++] = k + W;
+      }
+    }
+    return prim.create(Vrts, Vrts.length, Ind, Ind.length, MtlNo);
+  }
+
   static draw(Pr, World) {
     let w = _matr4.mulmatr(Pr.Trans, World);
     let winv = _matr4.transpose(_matr4.inverse(w));
@@ -216,3 +294,5 @@ export class prim {
     // console.log(i + ":" + a[i].N.x + "," + a[i].N.y + "," + a[i].N.z);
   }
 }
+
+

@@ -71,12 +71,12 @@ export function rndInit(s, n) {
   // initTruOct();
   // initDod();
   // initRhom();
-  initFloor();
-  initWall();
+  // initFloor();
+  // initWall();
   //initTruCubOct();
   initText();
   initSphere();
-  initWallLR();
+  // initWallLR();
 }
 
 export function render() {
@@ -96,10 +96,10 @@ export function render() {
   // renderRhom();
   renderText();
   renderSphere();
-  renderFloor();
-  renderWall();
+  // renderFloor();
+  // renderWall();
   //renderTruCubOct();
 
   //renderCube();
-  renderWallLR();
+  // renderWallLR();
 }

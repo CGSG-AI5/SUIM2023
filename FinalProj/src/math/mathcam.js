@@ -4,7 +4,7 @@ export let cam;
 
 let ProjSize = 0.1 /* Project plane fit square */,
   ProjDist = 0.1 /* Distance to project plane from viewer (near) */,
-  ProjFarClip = 300; /* Distance to project far clip plane (far) */
+  ProjFarClip = 3000; /* Distance to project far clip plane (far) */
 
 
 class _camera {

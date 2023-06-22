@@ -1,4 +1,4 @@
-export class _vec3 {
+  export class _vec3 {
   constructor(x, y, z) {
     this.x = x;
     this.y = y;

@@ -7,7 +7,7 @@ import { UBO, Ubo_cell } from "../rnd/res/ubo.js";
 import { CamUBO } from "../rnd/rndbase.js";
 
 export function initCam() {
-  CamSet(_vec3.set(0, 0, 6), _vec3.set(0, 0, 0), _vec3.set(0, 1, 0));
+  CamSet(_vec3.set(0, 0, 150), _vec3.set(0, 0, 0), _vec3.set(0, 1, 0));
 }
 
 export function renderCam() {
@@ -40,7 +40,7 @@ export function renderCam() {
   // if (Azimuth < -45) Azimuth = -45;
   // else if (Azimuth > 45) Azimuth = 45;
 
-  Dist += myTimer.globalDeltaTime * (2 * myInput.MouseWheel);
+  Dist += myTimer.globalDeltaTime * (2 * myInput.MouseWheel + myInput.Keys[16] * 100);
 
   // console.log(key.charCodeAt(0));
   if (Dist < 0.1) Dist = 0.1;

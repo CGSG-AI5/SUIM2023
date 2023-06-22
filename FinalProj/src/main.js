@@ -8,7 +8,10 @@ let names = ["default", "texture"]
 let Md = [0, 0],
   MouseClick = [0, 0],
   Wheel = 0,
-  Keys = new Array(255).fill(0);;
+  Keys = new Array(255).fill(0);
+
+
+// export let ep = epsilon[0].value
 
 Promise.all(namesFile.map((u) => fetch(u)))
   .then((responses) => Promise.all(responses.map((res) => res.text())))
